@@ -1,0 +1,34 @@
+{
+  "enabled": true,
+  "rate": "+5%",
+  "voices": {
+    "default": "en-US-AvaMultilingualNeural",
+    "cyrillic": "ru-RU-SvetlanaNeural",
+    "hebrew": "he-IL-HilaNeural"
+  },
+  "phrases": {
+    "default": {
+      "link": "Links are in the chat.",
+      "path": "File paths are in the chat.",
+      "code": "Code is in the chat."
+    },
+    "cyrillic": {
+      "link": "Ссылки — в чате.",
+      "path": "Пути к файлам — в чате.",
+      "code": "Код — в чате."
+    },
+    "hebrew": {
+      "link": "הקישורים בצ'אט.",
+      "path": "הנתיבים בצ'אט.",
+      "code": "הקוד בצ'אט."
+    }
+  },
+  "by_language": {
+    "ukrainian": {
+      "cyrillic": "uk-UA-PolinaNeural"
+    },
+    "russian": {
+      "cyrillic": "ru-RU-SvetlanaNeural"
+    }
+  }
+}
