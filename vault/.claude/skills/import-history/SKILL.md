@@ -25,6 +25,13 @@ Say it in the user's language, one step per message, wait for "done":
    Mac: `~/.secondbrain-venv/bin/python .claude/scripts/claude_export.py "<zip>" "Files/Claude export"`
 3. It prints what is inside. Never edit anything in `Files/Claude export/` — it is the raw source.
 
+## 2a. Private chats stay out — ask before reading
+
+Read only `INDEX.md` (titles and dates) first. Say in one line: "Some chats may be private. Tell me which topics,
+people or projects to skip — I won't open them." Write the skip list at the top of `Files/Claude export/INDEX.md`
+and never open, quote or summarize a skipped chat. If they say "skip everything personal", read only chats that are
+clearly about work, study or projects. (A tester refused the whole import for this reason, 24.10.)
+
 ## 3. Learn — read in this order, not everything
 
 1. Memory files, if the export has them (anything with "memor" in the name) — Claude's own summary of the user. Gold.

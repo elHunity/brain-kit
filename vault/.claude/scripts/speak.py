@@ -5,7 +5,7 @@
 #   Synth only (no sound): speak.py --mp3 <utf8 text file> <out.mp3>
 # The voice is picked per chunk by the script of the text (Cyrillic, Hebrew, everything else),
 # so a Russian answer is never read by an English voice. Free Microsoft voices (edge-tts), no key.
-# Config: speak.json next to this file ("enabled": false = silent). Log: <temp>/secondbrain-speak/log.txt
+# On/off: line "Voice: on|off" in 00-Profile.md. Config: speak.json next to this file. Log: <temp>/secondbrain-speak/log.txt
 import asyncio, json, os, re, subprocess, sys, tempfile, threading, time, traceback
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -190,14 +190,18 @@ def chunks(text):
 
 # ---------- synth + play ----------
 
-def profile_language():
-    # "Language: X" line in 00-Profile.md, two folders up from this script
+def profile_field(name):
+    # "<Name>: X" line in 00-Profile.md, two folders up from this script
     try:
         with open(os.path.join(HERE, "..", "..", "00-Profile.md"), encoding="utf-8") as f:
-            m = re.search(r"^Language:\s*(.+?)\s*$", f.read(), re.M)
+            m = re.search(r"^" + name + r":\s*(.+?)\s*$", f.read(), re.M)
             return m.group(1).lower() if m else ""
     except OSError:
         return ""
+
+
+def profile_language():
+    return profile_field("Language")
 
 
 def pick_voice(text, cfg):
@@ -338,11 +342,17 @@ def start(text):
     textfile = os.path.join(STATE, "%d.txt" % born)
     with open(textfile, "w", encoding="utf-8") as f:
         f.write(text)
+    exe = sys.executable
     if WINDOWS:
-        detach = {"creationflags": 0x00000008 | 0x00000200}  # DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP
+        # Not DETACHED_PROCESS: the venv python.exe is a launcher, and its console-less child opened a black
+        # terminal window on every answer (tester's PC, 24.10). pythonw + CREATE_NO_WINDOW keep it invisible.
+        w = os.path.join(os.path.dirname(exe), "pythonw.exe")
+        if os.path.exists(w):
+            exe = w
+        detach = {"creationflags": 0x08000000 | 0x00000200}  # CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP
     else:
         detach = {"start_new_session": True}
-    subprocess.Popen([sys.executable, "-I", os.path.abspath(__file__), "--worker", textfile, str(born)],
+    subprocess.Popen([exe, "-I", os.path.abspath(__file__), "--worker", textfile, str(born)],
                      stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                      close_fds=True, **detach)
 
@@ -367,7 +377,8 @@ def main():
                 synth(p, cfg, args[2].replace(".mp3", "_%d.mp3" % i))
                 print(i, script_of(p), pick_voice(p, cfg), p[:60])
         return
-    if not cfg.get("enabled", True):
+    # "Voice: off" lives in 00-Profile.md, not here: Claude Code asks permission for every edit inside .claude/
+    if not cfg.get("enabled", True) or profile_field("Voice") == "off":
         return
     data = json.loads(sys.stdin.buffer.read().decode("utf-8") or "{}")
     md = ""

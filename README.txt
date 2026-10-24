@@ -12,7 +12,7 @@ WINDOWS
    If Windows shows a blue "Windows protected your PC" window:
    click "More info", then "Run anyway". It shows this for any script from the internet.
 3. Answer Y or N for each program. Choose your language.
-4. When VS Code opens: click the Claude icon on the left, sign in, say "hi".
+4. When VS Code opens: "Trust Folder & Continue", then the orange spark icon at the top right, sign in, say "hi".
 
 MAC
 1. Unzip this folder (double-click the zip).
@@ -20,7 +20,7 @@ MAC
    Type  bash  and a space, then drag "install-mac.command" from the folder into the Terminal window.
    Press Enter.
 3. Answer y or n for each program. It may ask for your Mac password.
-4. When VS Code opens: click the Claude icon on the left, sign in, say "hi".
+4. When VS Code opens: "Trust Folder & Continue", then the orange spark icon at the top right, sign in, say "hi".
 
 Talking with your voice
 - Wispr Flow: free 2,000 words a week, then it stops until the weekly reset.

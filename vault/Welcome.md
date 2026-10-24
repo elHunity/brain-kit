@@ -5,9 +5,13 @@ Your notes stay on this computer.
 
 ## Start
 
-1. In VS Code, open Claude: the Claude icon on the left side bar (or the spark icon at the top right of an open file).
-2. Sign in with your Claude account (Pro or higher).
-3. Say or type **"hi"**. It will explain the rest in your language.
+1. If VS Code asks "Do you trust the authors of the files in this folder?" — click **Trust Folder & Continue**.
+2. Open Claude: the orange spark icon at the top right of VS Code. The "Chat" panel on the right is Microsoft
+   Copilot, not Claude — close it.
+3. Sign in with your Claude account (Pro or higher).
+4. Say or type **"hi"**. It will explain the rest in your language.
+5. When a chat gets long, type **harvest** — it saves everything; then open a new chat with the plus at the top of
+   the Claude panel and say **"continue"**.
 
 ## Talking with your voice
 

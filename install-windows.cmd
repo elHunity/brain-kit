@@ -111,16 +111,26 @@ if defined CODE (
   echo  VS Code not found - install it, then add the "Claude Code" extension from its Extensions panel.
 )
 if exist "%VENV%\Scripts\python.exe" "%VENV%\Scripts\python.exe" "%KIT%setup\obsidian_register.py" "%BRAIN%"
-start "" "obsidian://open?vault=SecondBrain"
+rem Open Obsidian only if it is really there: otherwise Windows shows "get an app to open this obsidian link".
+set "OBS="
+for %%O in ("%LOCALAPPDATA%\Programs\Obsidian\Obsidian.exe" "%ProgramFiles%\Obsidian\Obsidian.exe") do if not defined OBS if exist %%O set "OBS=%%~O"
+if defined OBS (
+  start "" "obsidian://open?vault=SecondBrain"
+) else (
+  echo  Obsidian is not installed - your notes still work, Obsidian only shows them nicely.
+)
 if defined CODE call "%CODE%" "%BRAIN%"
 
 :done
 echo.
 echo  ==============================================
 echo    Done. What's next:
-echo    1. In VS Code, open Claude - the Claude icon on the left.
-echo    2. Sign in with your Claude account - Pro or higher.
-echo    3. Say or type "hi".
+echo    1. If VS Code asks "Do you trust the authors of the files in this folder?" -
+echo       click "Trust Folder & Continue".
+echo    2. Open Claude: the orange spark icon at the top right of VS Code.
+echo       The "Chat" panel on the right is Microsoft Copilot, not Claude - close it.
+echo    3. Sign in with your Claude account - Pro or higher.
+echo    4. Say or type "hi".
 echo    To speak instead of typing: Wispr Flow, or press Win + H.
 echo    Read "Welcome" in Obsidian for the rest.
 echo  ==============================================
@@ -132,8 +142,9 @@ rem ---------- helpers ----------
 
 :app
 rem %1 = winget id, %2 = what it is
+rem winget fails with a NEGATIVE code (e.g. -1978335212 = not found); "if errorlevel 1" misses it, so compare to 0.
 winget list --id %1 -e --accept-source-agreements <nul >nul 2>&1
-if not errorlevel 1 (
+if !errorlevel!==0 (
   echo  %~2: already installed.
   exit /b 0
 )
@@ -148,6 +159,11 @@ if /i not "!ANS!"=="Y" (
   exit /b 0
 )
 winget install --id %1 -e --silent --accept-package-agreements --accept-source-agreements <nul
+if !errorlevel!==0 (
+  echo  %~2: installed.
+) else (
+  echo  %~2: could NOT be installed ^(code !errorlevel!^). Tell the person who gave you this.
+)
 exit /b 0
 
 :findgit
