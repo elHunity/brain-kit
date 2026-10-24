@@ -25,7 +25,9 @@ MAC
 Talking with your voice
 - Wispr Flow: free 2,000 words a week, then it stops until the weekly reset.
 - Built-in dictation has no limit - keep it as backup:
-  Windows: Win + H.  Mac: System Settings -> Keyboard -> Dictation.
+  Windows: Win + H.
+  Mac: turn on once in System Settings -> Keyboard -> Dictation, then press the Microphone key
+  on the top row (or Edit -> Start Dictation).
 
 Is it safe?
 - The installers are plain text - open them in Notepad/TextEdit or ask Claude

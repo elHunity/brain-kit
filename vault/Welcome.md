@@ -15,7 +15,9 @@ Your notes stay on this computer.
   after that it stops until the weekly reset (or $15 a month for unlimited).
 - **Built-in dictation** — no limit, a bit less accurate. Keep it as your backup:
   - Windows: click in the chat box, press **Win + H**, speak.
-  - Mac: turn it on in System Settings → Keyboard → Dictation, then use the shortcut shown there.
+  - Mac: turn it on once in System Settings → Keyboard → Dictation. Then click in the chat box and press the
+    Microphone key on the top row of the keyboard (or Edit → Start Dictation). No length limit; it stops after
+    30 seconds of silence.
 
 ## The voice that answers
 
