@@ -44,6 +44,8 @@ If `00-Profile.md` says `First run: yes`, the user has just installed you. On th
 5. Do not interview them. Do not explain the folders. Do not list features.
 6. At the end, change `First run: yes` to `First run: no`, and say: "Next time, just say 'continue' — I'll know where
    we stopped."
+7. If they have used Claude before, add one line: "If you've chatted with Claude before, I can learn from those chats —
+   say 'import my Claude history' when you have five minutes." (the import-history skill). Not more than once.
 
 ## Voice
 
@@ -62,6 +64,7 @@ that is speaking.
 | One question, what we decided and why | `Topics/<question>.md` |
 | One source: article, video, book, conversation | `Notes/<title>.md` |
 | Files, screenshots, documents | `Files/` |
+| Old Claude chats (raw export, never edit) | `Files/Claude export/` |
 | Rules from the user's corrections | `My rules.md` |
 | Map of all notes | `00-Index.md` |
 

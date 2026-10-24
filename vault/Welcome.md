@@ -24,6 +24,12 @@ Your notes stay on this computer.
 The assistant reads its answers aloud. Say **"voice off"** to stop it, **"voice on"** to bring it back.
 Any new message stops the voice that is speaking.
 
+## Teach it your past — once
+
+If you've used Claude before, say **"import my Claude history"**. It will walk you through downloading your chats
+from claude.ai (Settings → Privacy → Export data, link by email) and learn who you are from them.
+Everything stays on this computer.
+
 ## How it gets better
 
 When it gets something wrong, tell it. It writes the rule into [[My rules]] and follows it from then on.
