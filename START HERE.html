@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Second Brain — start here</title>
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1d1f23;--mute:#6b7280;--line:#e7e5e0;--acc:#d97757;--ok:#16a34a;--term:#1e1e1e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 -apple-system,"Segoe UI",system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:36px 20px 60px}
+.logo{width:52px;height:52px;border-radius:14px;background:var(--acc);color:#fff;display:grid;place-items:center;font-size:28px;font-weight:700}
+h1{font-size:32px;margin:16px 0 6px}.lead{color:var(--mute);margin:0 0 22px;font-size:18px}
+.tabs{display:flex;gap:8px;margin:0 0 18px}
+.tabs button{font:inherit;border:1px solid var(--line);background:var(--card);padding:8px 16px;border-radius:999px;cursor:pointer}
+.tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:0 0 12px;display:flex;gap:16px}
+.n{width:34px;height:34px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+.step h3{margin:4px 0 6px;font-size:19px}.step p{margin:6px 0}
+.mute{color:var(--mute);font-size:15px}
+kbd{font:600 14px ui-monospace,Menlo,Consolas,monospace;border:1px solid #cfccc6;border-bottom-width:3px;border-radius:6px;padding:1px 7px;background:#fafaf8}
+.pill{display:inline-block;border:1px solid #cfccc6;border-radius:7px;padding:0 9px;background:#f4f3f0;font-weight:600}
+.cmd{display:flex;gap:10px;align-items:stretch;margin:10px 0 4px}
+.step>div:last-child{min-width:0}
+.cmd code{flex:1;min-width:0;background:var(--term);color:#e8e8e8;border-radius:10px;padding:12px 14px;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-all}
+.cmd button{font:inherit;font-weight:700;background:var(--acc);color:#fff;border:0;border-radius:10px;padding:0 18px;cursor:pointer;min-width:96px}
+.cmd button.done{background:var(--ok)}
+.term{background:var(--term);border-radius:10px;overflow:hidden;margin:10px 0;max-width:520px}
+.term .top{background:#3a3a3a;height:22px;display:flex;gap:6px;align-items:center;padding:0 9px}
+.term .top i{width:10px;height:10px;border-radius:50%;background:#ff5f57}.term .top i+i{background:#febc2e}.term .top i+i+i{background:#28c840}
+.term pre{margin:0;padding:12px 14px;color:#e8e8e8;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap}
+.term .y{color:#7ee787}
+.warn{border-left:4px solid var(--acc);background:#fff7f3;padding:10px 14px;border-radius:8px;margin:10px 0}
+.final{background:var(--ink);color:#fff;border-radius:14px;padding:18px 22px;margin-top:22px}
+.final b{color:#ffb38f}
+[hidden]{display:none!important}
+</style></head><body><main>
+<div class="logo">✳</div>
+<h1>Your second brain</h1>
+<p class="lead">An assistant that remembers you. Setup takes about 10 minutes. Just follow the steps — you don't need to know anything about computers.</p>
+
+<div class="tabs"><button id="t-mac" onclick="show('mac')">Mac</button><button id="t-win" onclick="show('win')">Windows</button></div>
+
+<section id="mac">
+<div class="step"><div class="n">1</div><div>
+<h3>Open Terminal</h3>
+<p>Press <kbd>⌘ Cmd</kbd> + <kbd>Space</kbd>, type <b>Terminal</b>, press <kbd>Enter</kbd>. A window with text opens — that's normal.</p>
+</div></div>
+
+<div class="step"><div class="n">2</div><div>
+<h3>Copy this line and paste it into Terminal</h3>
+<div class="cmd"><code id="maccmd">bash "$(find ~/Downloads ~/Desktop ~/Documents -maxdepth 5 -name install-mac.command 2>/dev/null | head -1)"</code><button onclick="copy('maccmd',this)">Copy</button></div>
+<p>Click in the Terminal window, press <kbd>⌘ Cmd</kbd> + <kbd>V</kbd>, then <kbd>Enter</kbd>.</p>
+<p class="mute">If the Mac asks "Terminal would like to access files in your Downloads folder" — click <span class="pill">Allow</span>.</p>
+<p class="mute">Didn't work? Type <b>bash</b> and a space, drag the file <b>install-mac.command</b> from this folder into Terminal, press Enter.</p>
+</div></div>
+
+<div class="step"><div class="n">3</div><div>
+<h3>Answer the questions</h3>
+<p>It asks before installing each program. Type <b>y</b> and press <kbd>Enter</kbd> each time. For the language, type a number.</p>
+<div class="term"><div class="top"><i></i><i></i><i></i></div><pre>  Install Obsidian - shows your notes nicely, free? [y/n] <span class="y">y</span>
+ Which language should it speak with you?
+   1 - English    2 - Russian    3 - Hebrew    4 - other
+  Type a number and press Enter: <span class="y">1</span></pre></div>
+<div class="warn"><b>It may ask for your Mac password.</b> You won't see the letters as you type — that's normal. Type it and press Enter. The first time it may also install Apple's developer tools: this can take 5–15 minutes. Leave it running.</div>
+</div></div>
+
+<div class="step"><div class="n">4</div><div>
+<h3>VS Code opens — meet your assistant</h3>
+<p>If it asks "Do you trust the authors of the files in this folder?" — click <span class="pill">Trust Folder &amp; Continue</span>.</p>
+<p>Click the <b style="color:var(--acc)">orange spark ✳</b> at the top right. The "Chat" panel on the right is Microsoft Copilot, not Claude — close it.</p>
+<p>Sign in with your Claude account (Pro or higher), then type <b>hi</b>. It explains everything else — by voice.</p>
+</div></div>
+
+<div class="step"><div class="n">5</div><div>
+<h3>Talk instead of typing (optional)</h3>
+<p><b>Wispr Flow</b> — the most accurate; free 2,000 words a week. On first start it asks for the microphone and accessibility — allow both.</p>
+<p><b>Mac dictation</b> — no limit: turn it on once in System Settings → Keyboard → Dictation, then press the microphone key on the top row.</p>
+</div></div>
+</section>
+
+<section id="win" hidden>
+<div class="step"><div class="n">1</div><div>
+<h3>Double-click <b>install-windows</b> in this folder</h3>
+<p>If a blue window says "Windows protected your PC" — click <span class="pill">More info</span>, then <span class="pill">Run anyway</span>. It's a plain text script; you can open it in Notepad and read every line.</p>
+</div></div>
+
+<div class="step"><div class="n">2</div><div>
+<h3>Answer the questions</h3>
+<p>Press any key to start. It asks before installing each program: type <b>Y</b> and press <kbd>Enter</kbd>. For the language, type a number.</p>
+<p class="mute">Windows may ask "Allow changes to your device?" — click Yes.</p>
+</div></div>
+
+<div class="step"><div class="n">3</div><div>
+<h3>VS Code opens — meet your assistant</h3>
+<p>If it asks "Do you trust the authors of the files in this folder?" — click <span class="pill">Trust Folder &amp; Continue</span>.</p>
+<p>Click the <b style="color:var(--acc)">orange spark ✳</b> at the top right. The "Chat" panel on the right is Microsoft Copilot, not Claude — close it.</p>
+<p>Sign in with your Claude account (Pro or higher), then type <b>hi</b>. It explains everything else — by voice.</p>
+</div></div>
+
+<div class="step"><div class="n">4</div><div>
+<h3>Talk instead of typing (optional)</h3>
+<p><b>Wispr Flow</b> — the most accurate; free 2,000 words a week. <b>Win + H</b> — built into Windows, no limit.</p>
+</div></div>
+</section>
+
+<div class="final">Stuck anywhere? Take a screenshot and send it to the person who gave you this. <b>Please don't pass this copy on</b> — ask them for your friends.</div>
+</main>
+<script>
+function show(os){
+  document.getElementById('mac').hidden = os !== 'mac';
+  document.getElementById('win').hidden = os !== 'win';
+  document.getElementById('t-mac').className = os === 'mac' ? 'on' : '';
+  document.getElementById('t-win').className = os === 'win' ? 'on' : '';
+}
+function copy(id, b){
+  var t = document.getElementById(id).textContent;
+  var ok = function(){ b.textContent = 'Copied ✓'; b.className = 'done'; };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(t).then(ok, function(){ fallback(t); ok(); });
+  } else { fallback(t); ok(); }
+}
+function fallback(t){
+  var a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  a.remove();
+}
+var forced = location.hash.slice(1);
+show(forced === 'mac' || forced === 'win' ? forced : /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent) ? 'mac' : 'win');
+</script>
+</body></html>

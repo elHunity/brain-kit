@@ -1,6 +1,8 @@
 SECOND BRAIN - an assistant that remembers you
 ==============================================
 
+>>> Easiest: double-click "START HERE" in this folder. It opens in your browser with pictures. <<<
+
 What you need
 - A computer with Windows 10/11 or a Mac.
 - A Claude account with a paid plan (Pro or higher) - you sign in yourself.

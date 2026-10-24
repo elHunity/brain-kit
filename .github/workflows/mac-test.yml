@@ -47,3 +47,12 @@ jobs:
 
       - name: Run the installer a second time (must keep notes, not break)
         run: printf '\n1\n' | bash install-mac.command
+
+      - name: The copy-paste line from START HERE finds the installer where Telegram saves a download
+        run: |
+          D="$HOME/Downloads/Telegram Desktop/SecondBrain-kit-T1/brain-kit"
+          mkdir -p "$D" && cp -R . "$D/"
+          CMD=$(sed -n 's/.*<code id="maccmd">\(.*\)<\/code>.*/\1/p' "START HERE.html" | sed 's/&quot;/"/g; s/&amp;/\&/g')
+          echo "line from the page: $CMD"
+          cd /tmp && printf '\n' | bash -c "$CMD"
+          git -C "$HOME/Documents/SecondBrain" log --oneline | head -3
