@@ -18,11 +18,12 @@ Say it in the user's language, one step per message, wait for "done":
 
 ## 2. Unpack — you do this
 
-1. Find the newest zip from Anthropic in the user's Downloads folder (ask before reading Downloads; if unsure which
-   file, ask).
+1. Find the export yourself — the user never has to drag files into the chat (dragging into this panel needs
+   Shift on Mac and confused a tester for 4 minutes, 24.10). Look in Downloads for the newest `data-*.zip`, or a
+   `data-*` folder: Safari on Mac unzips downloads by itself. Ask once before reading Downloads; if unsure which, ask.
 2. Run, with the voice environment's Python (exactly this form — it runs without asking):
-   Windows: `~/.secondbrain-venv/Scripts/python.exe .claude/scripts/claude_export.py "<zip>" "Files/Claude export"`
-   Mac: `~/.secondbrain-venv/bin/python .claude/scripts/claude_export.py "<zip>" "Files/Claude export"`
+   Windows: `~/.secondbrain-venv/Scripts/python.exe .claude/scripts/claude_export.py "<zip or folder>" "Files/Claude export"`
+   Mac: `~/.secondbrain-venv/bin/python .claude/scripts/claude_export.py "<zip or folder>" "Files/Claude export"`
 3. It prints what is inside. Never edit anything in `Files/Claude export/` — it is the raw source.
 
 ## 2a. Private chats stay out — ask before reading

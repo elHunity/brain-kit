@@ -46,6 +46,7 @@ if ! command -v brew >/dev/null 2>&1; then
   exit 1
 fi
 
+MISSING=""
 cask() {  # cask <brew name> <app name in /Applications> <what it is>
   if [ -d "/Applications/$2.app" ] || brew list --cask "$1" >/dev/null 2>&1; then
     echo " $3: already installed."
@@ -54,6 +55,8 @@ cask() {  # cask <brew name> <app name in /Applications> <what it is>
   else
     echo " Skipped."
   fi
+  # a tester's Mac ended up without Wispr Flow and nobody noticed until much later (24.10): say it at the end
+  [ -d "/Applications/$2.app" ] || MISSING="$MISSING $2,"
 }
 cask visual-studio-code "Visual Studio Code" "VS Code - the window where you talk to Claude"
 cask obsidian "Obsidian" "Obsidian - shows your notes nicely, free"
@@ -144,4 +147,10 @@ echo "   turn it on once in System Settings - Keyboard - Dictation,"
 echo "   then press the Microphone key on the top row."
 echo "   Read \"Welcome\" in Obsidian for the rest."
 echo " =============================================="
+if [ -n "$MISSING" ]; then
+  echo
+  echo " NOT installed:${MISSING%,}. Run this again and answer y, or tell the person who gave you this."
+fi
+echo
+echo " You can close this Terminal window now."
 echo
