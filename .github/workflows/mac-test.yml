@@ -1,0 +1,49 @@
+# Runs the Mac installer on a clean GitHub macOS machine, answering "yes" to everything, then checks the result.
+name: mac-test
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  mac:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: What is already on this Mac
+        run: |
+          sw_vers
+          ls /Applications | grep -E "Visual Studio Code|Obsidian|Wispr" || echo "none of the three apps"
+          command -v brew git python3 code || true
+
+      - name: Run the installer like a user (Enter, then y to every program, language 1)
+        run: printf '\ny\ny\ny\n1\n' | bash install-mac.command
+
+      - name: Check the second brain folder
+        run: |
+          B="$HOME/Documents/SecondBrain"
+          test -f "$B/AGENTS.md" && echo "folder: ok"
+          tail -2 "$B/00-Profile.md"
+          git -C "$B" log --oneline
+          git -C "$B" status --short | head
+          ls -la "$B" "$B/.claude"
+
+      - name: Check the apps
+        run: |
+          for a in "Visual Studio Code" "Obsidian" "Wispr Flow"; do test -d "/Applications/$a.app" && echo "$a: installed" || echo "$a: MISSING"; done
+          code --list-extensions | grep -i anthropic || echo "Claude extension: MISSING"
+          cat "$HOME/Library/Application Support/obsidian/obsidian.json" || echo "Obsidian registration: MISSING"
+
+      - name: Check the voice (synthesis; the runner has no speakers)
+        run: |
+          B="$HOME/Documents/SecondBrain"
+          printf 'Hello, I am your second brain.\n\nПривет, я твой второй мозг.\n' > /tmp/in.md
+          "$HOME/.secondbrain-venv/bin/python" -I "$B/.claude/scripts/speak.py" --mp3 /tmp/in.md /tmp/out.mp3
+          ls -la /tmp/out_*.mp3
+          echo '{"transcript_path": "", "last_assistant_message": "Test reply."}' | bash "$B/.claude/scripts/speak.sh"
+          sleep 8
+          cat "${TMPDIR:-/tmp}/secondbrain-speak/log.txt" 2>/dev/null || echo "no voice log"
+
+      - name: Run the installer a second time (must keep notes, not break)
+        run: printf '\n1\n' | bash install-mac.command
