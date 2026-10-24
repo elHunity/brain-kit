@@ -70,7 +70,16 @@ fi
 echo
 echo " --- Step 2 of 4: your second brain folder ---"
 if [ -f "$BRAIN/AGENTS.md" ]; then
-  echo " Found an existing second brain in $BRAIN - keeping your notes, not touching it."
+  # Existing brain: notes stay; only the assistant's own files (instructions, scripts, skills) are replaced.
+  echo " Found your second brain in $BRAIN - keeping your notes, updating the assistant."
+  voice=on
+  grep -q '"enabled": *false' "$BRAIN/.claude/scripts/speak.json" 2>/dev/null && voice=off
+  cp "$KIT/vault/AGENTS.md" "$KIT/vault/CLAUDE.md" "$BRAIN/"
+  cp -R "$KIT/vault/.claude/." "$BRAIN/.claude/"
+  [ -f "$BRAIN/.claude/skills/wrap-up/SKILL.md" ] && rm -r "$BRAIN/.claude/skills/wrap-up"  # old name of harvest
+  grep -q '^Voice:' "$BRAIN/00-Profile.md" || printf 'Voice: %s\n' "$voice" >> "$BRAIN/00-Profile.md"
+  git -C "$BRAIN" add -A && git -C "$BRAIN" commit -q -m "Assistant updated"
+  echo " Updated. Your notes were not touched."
 else
   mkdir -p "$BRAIN"
   cp -R "$KIT/vault/." "$BRAIN/"

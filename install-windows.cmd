@@ -41,10 +41,7 @@ call :app WisprFlow.WisprFlow "Wispr Flow - voice typing, free 2,000 words a wee
 
 echo.
 echo  --- Step 2 of 4: your second brain folder ---
-if exist "%BRAIN%\AGENTS.md" (
-  echo  Found an existing second brain in %BRAIN% - keeping your notes, not touching it.
-  goto voice
-)
+if exist "%BRAIN%\AGENTS.md" goto update
 robocopy "%KIT%vault" "%BRAIN%" /E /NFL /NDL /NJH /NJS /NP >nul
 if errorlevel 8 (
   echo  Could not copy the folder to %BRAIN%.
@@ -74,6 +71,25 @@ if defined GIT (
 ) else (
   echo  Git not found - restore points are off. Install Git and run this again to turn them on.
 )
+goto voice
+
+:update
+rem Existing brain: notes stay; only the assistant's own files (instructions, scripts, skills) are replaced.
+echo  Found your second brain in %BRAIN% - keeping your notes, updating the assistant.
+set "VOICE=on"
+findstr /r /c:"enabled.: *false" "%BRAIN%\.claude\scripts\speak.json" >nul 2>&1 && set "VOICE=off"
+copy /y "%KIT%vault\AGENTS.md" "%BRAIN%\AGENTS.md" >nul
+copy /y "%KIT%vault\CLAUDE.md" "%BRAIN%\CLAUDE.md" >nul
+robocopy "%KIT%vault\.claude" "%BRAIN%\.claude" /E /NFL /NDL /NJH /NJS /NP >nul
+rem the old name of the harvest skill (before 24.10)
+if exist "%BRAIN%\.claude\skills\wrap-up\SKILL.md" rd /s /q "%BRAIN%\.claude\skills\wrap-up"
+findstr /b /c:"Voice:" "%BRAIN%\00-Profile.md" >nul 2>&1 || >>"%BRAIN%\00-Profile.md" echo Voice: !VOICE!
+call :findgit
+if defined GIT (
+  "%GIT%" -C "%BRAIN%" add -A 2>nul
+  "%GIT%" -C "%BRAIN%" commit -q -m "Assistant updated"
+)
+echo  Updated. Your notes were not touched.
 
 :voice
 echo.
