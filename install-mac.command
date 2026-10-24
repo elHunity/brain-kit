@@ -114,8 +114,12 @@ else
   echo " VS Code not found - install it, then add the \"Claude Code\" extension from its Extensions panel."
 fi
 [ -x "$VENV/bin/python" ] && "$VENV/bin/python" "$KIT/setup/obsidian_register.py" "$BRAIN"
-open "obsidian://open?vault=SecondBrain" 2>/dev/null
-[ -x "$CODE" ] && "$CODE" "$BRAIN"
+# "open" hands off to macOS and returns at once; the "code <folder>" CLI hung on a screenless test Mac.
+# CI (GitHub test Mac) has no screen: don't open windows there.
+if [ -z "${CI:-}" ]; then
+  open "obsidian://open?vault=SecondBrain" 2>/dev/null
+  open -a "Visual Studio Code" "$BRAIN" 2>/dev/null
+fi
 
 echo
 echo " =============================================="
