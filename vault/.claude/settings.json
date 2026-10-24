@@ -1,6 +1,13 @@
 {
+  "model": "opus",
+  "effortLevel": "high",
   "permissions": {
+    "defaultMode": "acceptEdits",
     "allow": [
+      "Bash(~/.secondbrain-venv/Scripts/python.exe .claude/scripts/youtube.py:*)",
+      "Bash(~/.secondbrain-venv/bin/python .claude/scripts/youtube.py:*)",
+      "Bash(~/.secondbrain-venv/Scripts/python.exe .claude/scripts/claude_export.py:*)",
+      "Bash(~/.secondbrain-venv/bin/python .claude/scripts/claude_export.py:*)",
       "Read",
       "Edit",
       "Write",

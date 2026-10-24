@@ -20,7 +20,7 @@ Say it in the user's language, one step per message, wait for "done":
 
 1. Find the newest zip from Anthropic in the user's Downloads folder (ask before reading Downloads; if unsure which
    file, ask).
-2. Run, with the voice environment's Python:
+2. Run, with the voice environment's Python (exactly this form — it runs without asking):
    Windows: `~/.secondbrain-venv/Scripts/python.exe .claude/scripts/claude_export.py "<zip>" "Files/Claude export"`
    Mac: `~/.secondbrain-venv/bin/python .claude/scripts/claude_export.py "<zip>" "Files/Claude export"`
 3. It prints what is inside. Never edit anything in `Files/Claude export/` — it is the raw source.

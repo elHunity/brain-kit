@@ -28,6 +28,11 @@ Your notes stay on this computer.
 The assistant reads its answers aloud. Say **"voice off"** to stop it, **"voice on"** to bring it back.
 Any new message stops the voice that is speaking.
 
+## YouTube videos
+
+Drop a YouTube link into the chat. It reads the whole video, saves the text, and writes a short note: the main
+point, key ideas with times, and what is useful for you.
+
 ## Teach it your past — once
 
 If you've used Claude before, say **"import my Claude history"**. It will walk you through downloading your chats
